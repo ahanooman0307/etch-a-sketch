@@ -5,10 +5,14 @@ const chosenColor = document.querySelector("#color");
 const chosenSize = document.querySelector("#range");
 const showSize = document.querySelector(".text");
 const clear = document.querySelector(".clear")
+const rainbowColor = document.querySelector(".rainbow");
+const header = document.querySelector(".header");
+
 
 //new variables
 let gridSize = 16;
 let color = "black";
+let rainbow = false;
 
 //function to create grid
 function createGrid(gridSize){
@@ -32,7 +36,17 @@ function colorGrid(){  //function to change color while hovering
 
       // and for each box I add a 'click' listener
       m.addEventListener('mouseover', () => {
+        if(rainbow == false){
         m.style.cssText = `background-color: ${color}`;
+        header.style.cssText = `color: black`;
+        }
+        else if (rainbow == true){
+        let red = [Math.floor(Math.random()*256)];
+        let green = [Math.floor(Math.random()*256)];
+        let blue = [Math.floor(Math.random()*256)];
+        m.style.cssText = `background-color: rgb(${red}, ${green}, ${blue})`; //create rainbow effect
+        header.style.cssText = `color: rgb(${red}, ${green}, ${blue})`;
+        }
       });
       
     });
@@ -61,6 +75,14 @@ chosenSize.addEventListener('input', changeSize);
 clear.addEventListener('click', clearGrid);
   
 //change color
-chosenColor.addEventListener('input', () => { color = chosenColor.value;});
+chosenColor.addEventListener('input', () => { color = chosenColor.value;
+chosenColor.style.cssText = `background-color: ${color}`});
 //erase color
 eraser.addEventListener('click', () => { color = "white"; });
+//activate rainbow
+rainbowColor.addEventListener('click', () =>{
+    if(rainbow == false){
+        rainbow = true;
+    }
+    else rainbow = false;
+})
