@@ -76,7 +76,8 @@ clear.addEventListener('click', clearGrid);
   
 //change color
 chosenColor.addEventListener('input', () => { color = chosenColor.value;
-chosenColor.style.cssText = `background-color: ${color}`});
+chosenColor.style.cssText = `background-color: ${color}`;
+rainbow = false;});
 //erase color
 eraser.addEventListener('click', () => { color = "white"; });
 //activate rainbow
