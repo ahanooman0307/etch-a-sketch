@@ -5,13 +5,10 @@ const chosenColor = document.querySelector("#color");
 const chosenSize = document.querySelector("#range");
 const showSize = document.querySelector(".text");
 const clear = document.querySelector(".clear")
+
 //new variables
 let gridSize = 16;
 let color = "black";
-
-
-
-
 
 //function to create grid
 function createGrid(gridSize){
@@ -24,53 +21,46 @@ function createGrid(gridSize){
         num++;
         grid.appendChild(box);
     }
-    grid.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)` //gridSize variable is length and height of grid
-    grid.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`
+    grid.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`; //gridSize variable is length and height of grid
+    grid.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
+    colorGrid();
 }
 
-function colorGrid(color){
+function colorGrid(){  //function to change color while hovering
+    const box = document.querySelectorAll('.grid-item');
+    box.forEach((m) => { // I used the .forEach method to iterate through each box
 
+      // and for each box I add a 'click' listener
+      m.addEventListener('mouseover', () => {
+        m.style.cssText = `background-color: ${color}`;
+      });
+      
+    });
+    }
+    
+function changeSize(){ //allows user to change size of grid
+    const box = document.querySelectorAll('.grid-item');
+    box.forEach(box => box.remove()); //deletes old grid
+    gridSize = chosenSize.value;
+    showSize.textContent = `${gridSize} x ${gridSize}` //show size on webpage
+    createGrid(gridSize); //make new grid with new variables
+    colorGrid();
 }
 
-
-
-
-
+function clearGrid(){
+    const box = document.querySelectorAll('.grid-item');
+    box.forEach(box => box.style.cssText = "background-color: white");
+}
 
 createGrid(gridSize);
 
+//change size of grid
+chosenSize.addEventListener('input', changeSize);
 
-chosenColor.addEventListener('input', () =>{
-    color = chosenColor.value;
-});
-eraser.addEventListener('click', () =>{
-    color = "white";
-});
-
-const box = document.querySelectorAll('.grid-item');
-// I used the .forEach method to iterate through each box
-
-
-chosenSize.addEventListener('input', () =>{
-
-        
-        const box = document.querySelectorAll('.grid-item');
-        box.forEach(box => box.remove());
-        gridSize = chosenSize.value;
-        showSize.textContent = `${gridSize} x ${gridSize}`
-        createGrid(gridSize);
-    })
-
-box.forEach((m) => {
-  // and for each box I add a 'click' listener
-  m.addEventListener('click', () => {
-    m.style.cssText = `background-color: ${color}`;
-  });
+//clear grid
+clear.addEventListener('click', clearGrid);
   
-});
-
-clear.addEventListener('click', () =>{
-    const box = document.querySelectorAll('.grid-item');
-    box.forEach(box => box.style.cssText = "background-color: white");
-  
-})
+//change color
+chosenColor.addEventListener('input', () => { color = chosenColor.value;});
+//erase color
+eraser.addEventListener('click', () => { color = "white"; });
